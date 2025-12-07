@@ -86,16 +86,31 @@ function SignUp() {
           }
         } else {
           // Backend returned an error response
+          // Backend format: { error: "string message" } or { message: "string" }
           const errorData = error.response.data;
+          const status = error.response.status || 500;
+
           if (typeof errorData === "string") {
             errorMessage = errorData;
           } else if (errorData && typeof errorData === "object") {
-            errorMessage =
-              errorData.error ||
-              errorData.message ||
-              `Server error (${error.response.status})`;
+            // Extract error message and ensure it's always a string
+            const extractedError = errorData.error || errorData.message;
+            if (extractedError) {
+              // Convert to string to prevent React error #31 (rendering objects)
+              errorMessage =
+                typeof extractedError === "string"
+                  ? extractedError
+                  : String(extractedError);
+            } else {
+              errorMessage = `Server error (${status}). Please try again.`;
+            }
           } else {
-            errorMessage = `Server error (${error.response.status}). Please try again.`;
+            errorMessage = `Server error (${status}). Please try again.`;
+          }
+
+          // Final safety check - ensure errorMessage is always a string
+          if (typeof errorMessage !== "string") {
+            errorMessage = `Server error (${status}). Please try again.`;
           }
         }
       } else if (error instanceof Error) {
@@ -103,9 +118,18 @@ function SignUp() {
           error.message || "An unexpected error occurred. Please try again.";
       } else if (typeof error === "string") {
         errorMessage = error;
+      } else {
+        // Fallback for any other error type
+        errorMessage = "An unexpected error occurred. Please try again.";
       }
 
-      setSubmitError(errorMessage);
+      // Final safety check - ensure we never set a non-string value to prevent React error #31
+      const safeErrorMessage =
+        typeof errorMessage === "string"
+          ? errorMessage
+          : "An error occurred. Please try again.";
+
+      setSubmitError(safeErrorMessage);
     } finally {
       setIsSubmitting(false);
     }
