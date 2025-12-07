@@ -97,10 +97,7 @@ function SignUp() {
             const extractedError = errorData.error || errorData.message;
             if (extractedError) {
               // Convert to string to prevent React error #31 (rendering objects)
-              errorMessage =
-                typeof extractedError === "string"
-                  ? extractedError
-                  : String(extractedError);
+              console.log(extractedError);
             } else {
               errorMessage = `Server error (${status}). Please try again.`;
             }
