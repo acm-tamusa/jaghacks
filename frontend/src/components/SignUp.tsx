@@ -70,19 +70,42 @@ function SignUp() {
         setSubmitSuccess(false);
       }, 2000);
     } catch (error) {
+      let errorMessage = "An error occurred. Please try again.";
+
       if (axios.isAxiosError(error)) {
-        // Backend returns { error: "message" } on failure
-        const errorMessage =
-          error.response?.data?.error ||
-          error.response?.data?.message ||
-          error.message ||
-          "An error occurred. Please try again.";
-        setSubmitError(errorMessage);
+        // Handle network errors (no response)
+        if (!error.response) {
+          if (
+            error.code === "ERR_NETWORK" ||
+            error.message.includes("Network Error")
+          ) {
+            errorMessage =
+              "Unable to connect to the server. Please check your connection and try again.";
+          } else {
+            errorMessage = "Network error. Please try again later.";
+          }
+        } else {
+          // Backend returned an error response
+          const errorData = error.response.data;
+          if (typeof errorData === "string") {
+            errorMessage = errorData;
+          } else if (errorData && typeof errorData === "object") {
+            errorMessage =
+              errorData.error ||
+              errorData.message ||
+              `Server error (${error.response.status})`;
+          } else {
+            errorMessage = `Server error (${error.response.status}). Please try again.`;
+          }
+        }
       } else if (error instanceof Error) {
-        setSubmitError(error.message);
-      } else {
-        setSubmitError("An unexpected error occurred. Please try again.");
+        errorMessage =
+          error.message || "An unexpected error occurred. Please try again.";
+      } else if (typeof error === "string") {
+        errorMessage = error;
       }
+
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
