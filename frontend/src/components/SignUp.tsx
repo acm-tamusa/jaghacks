@@ -86,29 +86,19 @@ function SignUp() {
           }
         } else {
           // Backend returned an error response
-          // Backend format: { error: "string message" } or { message: "string" }
           const errorData = error.response.data;
-          const status = error.response.status || 500;
 
-          if (typeof errorData === "string") {
-            errorMessage = errorData;
-          } else if (errorData && typeof errorData === "object") {
-            // Extract error message and ensure it's always a string
-            const extractedError = errorData.error || errorData.message;
-            if (extractedError) {
-              // Convert to string to prevent React error #31 (rendering objects)
-              console.log(extractedError);
-            } else {
-              errorMessage = `Server error (${status}). Please try again.`;
-            }
-          } else {
-            errorMessage = `Server error (${status}). Please try again.`;
-          }
+          // Try to extract message from various possible structures
+          const message =
+            errorData?.message?.message ||
+            errorData?.message ||
+            errorData?.error;
 
-          // Final safety check - ensure errorMessage is always a string
-          if (typeof errorMessage !== "string") {
-            errorMessage = `Server error (${status}). Please try again.`;
-          }
+          // Only use if it's a string, otherwise use fallback
+          errorMessage =
+            typeof message === "string"
+              ? message
+              : "An unexpected error occurred";
         }
       } else if (error instanceof Error) {
         errorMessage =
