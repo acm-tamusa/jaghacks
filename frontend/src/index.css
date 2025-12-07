@@ -18,8 +18,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Poppins", serif; /* Use the header font with a serif fallback */
-  font-weight: bold; /* Headings are typically bold */
+  font-family: "Poppins", sans-serif;
+  font-weight: 700; /* Headings are typically bold */
 }
 
 /* You can apply more specific styling to individual headers */

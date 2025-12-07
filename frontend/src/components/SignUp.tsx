@@ -13,6 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import axios from "axios";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 // API base URL - uses environment variable or defaults to relative path for production
 // For Vercel deployment, API routes are served from the same domain, so we use relative paths
@@ -142,6 +143,10 @@ function SignUp() {
           <DialogHeader>
             <DialogTitle>Receive Updates for JagHacks</DialogTitle>
           </DialogHeader>
+          <DialogDescription>
+            By signing up, you will receive updates about JagHacks to your
+            email. You can unsubscribe at any time.
+          </DialogDescription>
           <form
             id="email-form"
             onSubmit={form.handleSubmit(onSubmit)}
