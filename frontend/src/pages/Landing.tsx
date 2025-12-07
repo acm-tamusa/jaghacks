@@ -1,4 +1,3 @@
-import React from "react";
 import Graphic from "../components/Graphic";
 import SignUp from "../components/SignUp";
 

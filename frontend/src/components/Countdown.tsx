@@ -1,4 +1,4 @@
-import React, { useState, useEffect, JSX } from "react";
+import React, { useState, useEffect, type JSX } from "react";
 import TimeUnit from "./TimeUnit";
 
 interface CountdownProps {

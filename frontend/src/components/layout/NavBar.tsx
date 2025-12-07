@@ -1,4 +1,3 @@
-import React from "react";
 import ToggleTheme from "../ToggleTheme";
 import acmLogoLight from "../../assets/acm-logo-light.svg";
 import acmLogoDark from "../../assets/acm-logo-dark.svg";

@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface TimeUnitProps {
   number: number;
   label: string;

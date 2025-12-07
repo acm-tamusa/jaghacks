@@ -1,6 +1,4 @@
-import React from "react";
 import Countdown from "./Countdown";
-import TimeUnit from "./TimeUnit";
 
 function Graphic() {
   return (
