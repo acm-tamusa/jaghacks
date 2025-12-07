@@ -104,10 +104,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  console.log(`Test the API at http://localhost:${PORT}/api/test`);
-});
+// Start server (only in local development, not in serverless/Vercel)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Test the API at http://localhost:${PORT}/api/test`);
+  });
+}
 
 module.exports = app;

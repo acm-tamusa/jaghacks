@@ -1,0 +1,14 @@
+{
+  "name": "jaghacks-2",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JagHacks hackathon website",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

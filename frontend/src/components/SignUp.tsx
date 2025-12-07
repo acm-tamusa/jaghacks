@@ -14,9 +14,9 @@ import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import axios from "axios";
 
-// API base URL - adjust this to match your backend URL
-// In production, set this to your actual backend URL
-const API_BASE_URL = "http://localhost:3000";
+// API base URL - uses environment variable or defaults to relative path for production
+// For Vercel deployment, API routes are served from the same domain, so we use relative paths
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 /**
  * Subscribe user to Mailchimp via backend API
